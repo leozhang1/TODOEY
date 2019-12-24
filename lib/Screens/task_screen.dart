@@ -5,6 +5,9 @@ import '../widgets/tasks_lists.dart';
 import 'package:todoey/models/task.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/models/task_data.dart';
+import 'dart:async';
+import 'package:todoey/main.dart';
+
 
 class TaskScreen extends StatelessWidget {
   @override
@@ -19,17 +22,9 @@ class TaskScreen extends StatelessWidget {
               context: context,
               builder: (context) => AddTaskScreen((newTaskTitle) {
                     // get rid of this callback parameter and use provider in the AddTaskScreen
-                    try {
-                      Provider.of<TaskData>(context)
-                          .taskList
-                          .add(Task(taskName: newTaskTitle));
-                    } catch (ExceptionHandler) {
-                      print(
-                          '$ExceptionHandler, so using addTolist() from our provider instead');
-                      Provider.of<TaskData>(context)
-                          .addToList(Task(taskName: newTaskTitle));
-                      Navigator.pop(context);
-                    }
+                    Provider.of<TaskData>(context)
+                        .addToList(Task(taskName: newTaskTitle));
+                    Navigator.pop(context);
                   }))),
       backgroundColor: Colors.lightBlueAccent,
       body: Column(
@@ -60,9 +55,9 @@ class TaskScreen extends StatelessWidget {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  Provider.of<TaskData>(context).taskLength != 1
-                      ? '${Provider.of<TaskData>(context).taskLength} Tasks'
-                      : '${Provider.of<TaskData>(context).taskLength} Task',
+                  Provider.of<TaskData>(context).taskList.length != 1
+                      ? '${Provider.of<TaskData>(context).taskList.length} Tasks'
+                      : '${Provider.of<TaskData>(context).taskList.length} Task',
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:todoey/models/task.dart';
-import 'task_screen.dart';
+// import 'task_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class AddTaskScreen extends StatelessWidget {
 
@@ -69,7 +72,25 @@ class AddTaskScreen extends StatelessWidget {
                     if (enteredString != null)
                       callBack(enteredString);
                     else {
-                      print('please enter a task');
+                      AlertDialog alert = AlertDialog(
+                        title: Text('please enter a task'),
+                        elevation: 24.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(45.0),
+                          ),
+                        actions: <Widget>[
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('OK'),
+                          )
+                        ],
+                      );
+
+                      showDialog(
+                        context: context,
+                        builder: (context) => alert);
                     }
                   },
                 ),
